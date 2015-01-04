@@ -3,6 +3,7 @@
 'use strict';
 
 var React = require('react'),
+    Addons = require('react/addons'),
     //router
     Router = require('react-router'),
     Route = Router.Route,
@@ -84,7 +85,7 @@ var BookDetial = React.createClass({
                 <div>
                     詳細資料：
                    <p> 書名：{this.detail[0].name} 作者:{this.detail[0].author}</p>
-                   <a className='btn btn-default' onClick={this.addSelectBook} >add Car</a>
+                   <a className='btn btn-default' onClick={this.addSelectBook} >add Cart</a>
                 </div>
                 /*jshint ignore:end */
             );
@@ -149,17 +150,37 @@ var BooksCart = React.createClass({
 
 
 var Index = React.createClass({
-  render: function () {
-    return (
-      /*jshint ignore:start */
-      <div>
-        <h1>Index</h1>
-      </div>
-      /*jshint ignore:end */
-    );
-  }
+      render: function () {
+        return (
+          /*jshint ignore:start */
+          <div>
+            <h1>Index</h1>
+          </div>
+          /*jshint ignore:end */
+        );
+      }
 });
 
+var Label = React.createClass({
+      mixins: [FluxMixin, StoreWatchMixin('MainStore')],
+      getStateFromFlux: function() {
+        var flux = this.getFlux();
+        return flux.store('MainStore').getBooksCart();
+      },
+      render: function(){
+        var cx = React.addons.classSet,
+        hiedClass=cx({
+          'hide': this.state.cartsList.length>0?false:true,
+          'label': true,
+          'label-default':true
+        });
+        return(
+          /*jshint ignore:start */
+          <span className={hiedClass}>{this.state.cartsList.length}</span>
+          /*jshint ignore:end */
+        );
+      }
+})
 
 App = React.createClass({
     render: function() {
@@ -171,7 +192,7 @@ App = React.createClass({
                 <ul className='nav navbar-nav'>
                   <li><Link to='app'>Index</Link></li>
                   <li><Link to='BooksList'>Books List</Link></li>
-                  <li><Link to='BooksCart'>Books Cars</Link></li>
+                  <li><Link to='BooksCart'>Books Cars<Label flux={flux} /></Link></li>
                 </ul>  
               </nav>
             </header>

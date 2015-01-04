@@ -22,11 +22,7 @@ MainStore = Fluxxor.createStore({
                 author:'author C'
             }
         ];
-        this.cartsList=[ {   
-                id:2,
-                name:'book2',
-                author:'author B'
-            }];
+        this.cartsList=[];
         this.bindActions(
             Constants.ADD_CART,this.onAddCart,
             Constants.DELETE_CART,this.onDeleteCart
