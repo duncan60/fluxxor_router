@@ -39,10 +39,13 @@ flux.on('dispatch', function(type, payload) {
 *page
 */
 var BooksList = React.createClass({
-        mixins: [FluxMixin, StoreWatchMixin('MainStore')],
+        mixins: [Router.Navigation,FluxMixin, StoreWatchMixin('MainStore')],
         getStateFromFlux: function() {
             var flux = this.getFlux();
             return flux.store('MainStore').getBooksList ();
+        },
+        componentWillMount: function(){
+            this.transitionTo('/BooksList/1', {selectId: 1});
         },
         render: function () {
             return (
@@ -64,28 +67,27 @@ var BooksList = React.createClass({
 });
 var BookDetial = React.createClass({
         mixins: [ Router.State,FluxMixin, StoreWatchMixin('MainStore')],
-        detail:[],
         getStateFromFlux: function() {
             var flux = this.getFlux();
             return flux.store('MainStore').getBooksList();
         },
-        addSelectBook: function(){
-            this.getFlux().actions.addCart(this.detail[0]);
+        addSelectBook: function(book){
+            this.getFlux().actions.addCart(book);
         },
         componentDidMount: function() {
           
         },
         render:function(){
             var selectId = this.getParams().selectId;
-            this.detail = this.state.booksList.filter(function(book) {
+            var book=this.state.booksList.filter(function(book) {
                 return book.id == selectId;
             });
             return(
                 /*jshint ignore:start */
                 <div>
                     詳細資料：
-                   <p> 書名：{this.detail[0].name} 作者:{this.detail[0].author}</p>
-                   <a className='btn btn-default' onClick={this.addSelectBook} >add Cart</a>
+                   <p> 書名：{book[0].name} 作者:{book[0].author}</p>
+                   <a className='btn btn-default' onClick={this.addSelectBook.bind(this,book[0])} >add Cart</a>
                 </div>
                 /*jshint ignore:end */
             );
@@ -123,9 +125,6 @@ var BooksCart = React.createClass({
       getStateFromFlux: function() {
           var flux = this.getFlux();
           return flux.store('MainStore').getBooksCart();
-      },
-      componentDidMount: function() {
-          
       },
       deleteCarts: function(book){
           this.getFlux().actions.deleteCart(book);
