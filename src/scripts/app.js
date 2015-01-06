@@ -28667,7 +28667,11 @@ var BooksList = React.createClass({displayName: "BooksList",
                 React.createElement("h1", null, "Books List"), 
                 React.createElement("ul", {className: "list-group"}, 
                     this.state.booksList.map(function(book,i){
-                      return  React.createElement("li", {className: "list-group-item", key: i}, React.createElement(Link, {to: "select", params: {selectId: book.id}}, book.name));
+                        var cx = React.addons.classSet,
+                        spanClass=cx({
+                          'glyphicon glyphicon-shopping-cart': book.select
+                        });
+                      return  React.createElement("li", {className: "list-group-item", key: i}, React.createElement(Link, {to: "select", params: {selectId: book.id}}, book.name), React.createElement("span", {className: spanClass}));
                     })
                 ), 
                  React.createElement("div", {className: "content"}, 
@@ -28687,20 +28691,31 @@ var BookDetial = React.createClass({displayName: "BookDetial",
         addSelectBook: function(book){
             this.getFlux().actions.addCart(book);
         },
-        componentDidMount: function() {
-          
+        removeSelectBook: function(book){
+            this.getFlux().actions.deleteCart(book);
         },
         render:function(){
+            
             var selectId = this.getParams().selectId;
             var book=this.state.booksList.filter(function(book) {
                 return book.id == selectId;
             });
+            var cx = React.addons.classSet,
+                addClass=cx({
+                    'hide': book[0].select,
+                    'btn btn-default':true
+                }),
+                removeClass=cx({
+                    'hide': !book[0].select,
+                    'btn btn-default':true
+                });
             return(
                 /*jshint ignore:start */
                 React.createElement("div", null, 
                     "詳細資料：", 
                    React.createElement("p", null, " 書名：", book[0].name, " 作者:", book[0].author), 
-                   React.createElement("a", {className: "btn btn-default", onClick: this.addSelectBook.bind(this,book[0])}, "add Cart")
+                   React.createElement("a", {className: addClass, onClick: this.addSelectBook.bind(this,book[0])}, "add Cart"), 
+                   React.createElement("a", {className: removeClass, onClick: this.removeSelectBook.bind(this,book[0])}, "remove Cart")
                 )
                 /*jshint ignore:end */
             );
@@ -28866,12 +28881,16 @@ MainStore = Fluxxor.createStore({
         );
     },
     onAddCart:function(playload){
+        var idx=this.booksList.indexOf(playload.book);
         this.cartsList.push(playload.book);
+        this.booksList[idx].select=true;
         this.emit('change');
     },
     onDeleteCart:function(playload){
         var idx=this.cartsList.indexOf(playload.book);
         this.cartsList.splice(idx,1);
+        idx=this.booksList.indexOf(playload.book);
+        this.booksList[idx].select=false;
         this.emit('change');
     },
     getBooksList: function() {

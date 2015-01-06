@@ -54,7 +54,11 @@ var BooksList = React.createClass({
                 <h1>Books List</h1>
                 <ul className='list-group'>
                     {this.state.booksList.map(function(book,i){
-                      return  <li className='list-group-item' key={i}><Link to='select' params={{selectId: book.id}}>{book.name}</Link></li>;
+                        var cx = React.addons.classSet,
+                        spanClass=cx({
+                          'glyphicon glyphicon-shopping-cart': book.select
+                        });
+                      return  <li className='list-group-item' key={i}><Link to='select' params={{selectId: book.id}}>{book.name}</Link><span className={spanClass}></span></li>;
                     })}
                 </ul>
                  <div className='content'>
@@ -74,20 +78,31 @@ var BookDetial = React.createClass({
         addSelectBook: function(book){
             this.getFlux().actions.addCart(book);
         },
-        componentDidMount: function() {
-          
+        removeSelectBook: function(book){
+            this.getFlux().actions.deleteCart(book);
         },
         render:function(){
+            
             var selectId = this.getParams().selectId;
             var book=this.state.booksList.filter(function(book) {
                 return book.id == selectId;
             });
+            var cx = React.addons.classSet,
+                addClass=cx({
+                    'hide': book[0].select,
+                    'btn btn-default':true
+                }),
+                removeClass=cx({
+                    'hide': !book[0].select,
+                    'btn btn-default':true
+                });
             return(
                 /*jshint ignore:start */
                 <div>
                     詳細資料：
                    <p> 書名：{book[0].name} 作者:{book[0].author}</p>
-                   <a className='btn btn-default' onClick={this.addSelectBook.bind(this,book[0])} >add Cart</a>
+                   <a className={addClass} onClick={this.addSelectBook.bind(this,book[0])} >add Cart</a>
+                   <a className={removeClass} onClick={this.removeSelectBook.bind(this,book[0])} >remove Cart</a>
                 </div>
                 /*jshint ignore:end */
             );
