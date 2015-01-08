@@ -1,7 +1,11 @@
 'use strict';
 
 var Constants = {
-  ADD_CART: 'ADD_CART',
-  DELETE_CART: 'DELETE_CART'
+	LOAD_BOOK_LIST:'LOAD_BOOK_LIST',
+	LOAD_BOOK_LIST_SUCCESS:'LOAD_BOOK_LIST_SUCCESS',
+	LOAD_FAIL:'LOAD_FAIL',
+
+  	ADD_CART: 'ADD_CART',
+  	DELETE_CART: 'DELETE_CART'
 };
 module.exports=Constants;

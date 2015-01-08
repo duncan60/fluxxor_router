@@ -5,28 +5,26 @@ var Fluxxor = require('fluxxor'),
     MainStore;
 MainStore = Fluxxor.createStore({
     initialize : function(){
-        this.booksList = [
-            {   
-                id:1,
-                name:'book1',
-                author:'author A'
-            },
-            {   
-                id:2,
-                name:'book2',
-                author:'author B'
-            },
-            {   
-                id:3,
-                name:'book3',
-                author:'author C'
-            }
-        ];
+        this.booksList = [];
         this.cartsList=[];
         this.bindActions(
+            Constants.LOAD_BOOK_LIST,this.onLoadBookList,
+            Constants.LOAD_BOOK_LIST_SUCCESS,this.onLoadBookListSucess,
+            Constants.LOAD_FAIL,this.onloadFail,
+
             Constants.ADD_CART,this.onAddCart,
             Constants.DELETE_CART,this.onDeleteCart
         );
+    },
+    onLoadBookList:function(){
+
+    },
+    onLoadBookListSucess:function(res){
+        this.booksList=res.data.bookList;
+        this.emit('change');
+    },
+    onloadFail:function(res){
+        this.emit('change');
     },
     onAddCart:function(playload){
         var idx=this.booksList.indexOf(playload.book);

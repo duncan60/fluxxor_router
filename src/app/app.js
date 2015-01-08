@@ -14,9 +14,9 @@ var React = require('react'),
     Fluxxor = require('fluxxor'),
     FluxMixin = Fluxxor.FluxMixin(React),
     StoreWatchMixin = Fluxxor.StoreWatchMixin,
-    Constants = require("./constants"),
-    Actions = require("./actions"),
-    MainStore = require("./stores/MainStore"),
+    Constants = require('./constants'),
+    Actions = require('./actions'),
+    MainStore = require('./stores/MainStore'),
     //app
     App;
 
@@ -45,7 +45,7 @@ var BooksList = React.createClass({
             return flux.store('MainStore').getBooksList ();
         },
         componentWillMount: function(){
-            this.transitionTo('/BooksList/1', {selectId: 1});
+              this.transitionTo('/BooksList/1');
         },
         render: function () {
             return (
@@ -70,10 +70,15 @@ var BooksList = React.createClass({
         }
 });
 var BookDetial = React.createClass({
-        mixins: [ Router.State,FluxMixin, StoreWatchMixin('MainStore')],
+        mixins: [Router.Navigation,Router.State,FluxMixin, StoreWatchMixin('MainStore')],
         getStateFromFlux: function() {
             var flux = this.getFlux();
             return flux.store('MainStore').getBooksList();
+        },
+        componentWillMount: function(){
+            if(this.state.booksList.length===0){
+                this.transitionTo('/');
+            }
         },
         addSelectBook: function(book){
             this.getFlux().actions.addCart(book);
@@ -82,10 +87,9 @@ var BookDetial = React.createClass({
             this.getFlux().actions.deleteCart(book);
         },
         render:function(){
-            
             var selectId = this.getParams().selectId;
             var book=this.state.booksList.filter(function(book) {
-                return book.id == selectId;
+                return book.id === selectId;
             });
             var cx = React.addons.classSet,
                 addClass=cx({
@@ -131,7 +135,7 @@ var DeleteCartItem = React.createClass({
           書名：{this.props.book.name} 作者:{this.props.book.author} <a className='btn btn-default' onClick={this.deleteBook}> delete </a>
       </li>
       /*jshint ignore:end */
-    )
+    );
   }
 });
 
@@ -194,9 +198,13 @@ var Label = React.createClass({
           /*jshint ignore:end */
         );
       }
-})
+});
 
 App = React.createClass({
+    mixins: [FluxMixin],
+    componentDidMount: function(){
+      this.getFlux().actions.getBookList();
+    },
     render: function() {
         return (
         	/*jshint ignore:start */
@@ -211,7 +219,7 @@ App = React.createClass({
               </nav>
             </header>
             {/* this is the important part */}
-            <RouteHandler flux={flux} />
+            <RouteHandler flux={flux}   />
           </div>
           /*jshint ignore:end */
         );
@@ -225,13 +233,13 @@ var routes = (
         <Route path=':selectId' name='select' handler={BookDetial}/>
     </Route>
     <Route name='BooksCart' handler={BooksCart}/>
-    <DefaultRoute handler={Index}/>
+    <DefaultRoute  handler={Index}/>
   </Route>
   /*jshint ignore:end */ 
 );
 /*jshint ignore:start */
 Router.run(routes, function (Handler,state) {
-    React.render(<Handler />, document.getElementById('app'));
+    React.render(<Handler flux={flux} />, document.getElementById('app'));
 });
 /*jshint ignore:end */ 
 
