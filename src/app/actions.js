@@ -5,6 +5,10 @@ var Constants = require("./constants"),
 	APIServices= require("./services/APIServices");
 
 var actions={
+	user:{
+	    login: function() {  },
+	    logout: function(){  }
+	},
 	getBookList:function(){
 		this.dispatch(Constants.LOAD_BOOK_LIST,{msg:'get book list'});
 		APIServices.getBookList().then(

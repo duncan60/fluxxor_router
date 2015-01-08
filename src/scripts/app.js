@@ -28599,6 +28599,10 @@ var Constants = require("./constants"),
 	APIServices= require("./services/APIServices");
 
 var actions={
+	user:{
+	    login: function() {  },
+	    logout: function(){  }
+	},
 	getBookList:function(){
 		this.dispatch(Constants.LOAD_BOOK_LIST,{msg:'get book list'});
 		APIServices.getBookList().then(
@@ -28836,7 +28840,7 @@ var Label = React.createClass({displayName: "Label",
 App = React.createClass({displayName: "App",
     mixins: [FluxMixin],
     componentDidMount: function(){
-      this.getFlux().actions.getBookList();
+        this.getFlux().actions.getBookList();
     },
     render: function() {
         return (
@@ -28847,12 +28851,12 @@ App = React.createClass({displayName: "App",
                 React.createElement("ul", {className: "nav navbar-nav"}, 
                   React.createElement("li", null, React.createElement(Link, {to: "app"}, "Index")), 
                   React.createElement("li", null, React.createElement(Link, {to: "BooksList"}, "Books List")), 
-                  React.createElement("li", null, React.createElement(Link, {to: "BooksCart"}, "Books Cars", React.createElement(Label, {flux: flux})))
+                  React.createElement("li", null, React.createElement(Link, {to: "BooksCart"}, "Books Cars", React.createElement(Label, null)))
                 )
               )
             ), 
             /* this is the important part */
-            React.createElement(RouteHandler, {flux: flux})
+            React.createElement(RouteHandler, null)
           )
           /*jshint ignore:end */
         );
@@ -28862,11 +28866,11 @@ App = React.createClass({displayName: "App",
 var routes = (
   /*jshint ignore:start */
   React.createElement(Route, {name: "app", path: "/", handler: App, location: "histroy"}, 
-    React.createElement(Route, {name: "BooksList", handler: BooksList}, 
-        React.createElement(Route, {path: ":selectId", name: "select", handler: BookDetial})
-    ), 
-    React.createElement(Route, {name: "BooksCart", handler: BooksCart}), 
-    React.createElement(DefaultRoute, {handler: Index})
+      React.createElement(Route, {name: "BooksList", handler: BooksList}, 
+          React.createElement(Route, {path: ":selectId", name: "select", handler: BookDetial})
+      ), 
+      React.createElement(Route, {name: "BooksCart", handler: BooksCart}), 
+      React.createElement(DefaultRoute, {handler: Index})
   )
   /*jshint ignore:end */ 
 );

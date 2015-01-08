@@ -203,7 +203,7 @@ var Label = React.createClass({
 App = React.createClass({
     mixins: [FluxMixin],
     componentDidMount: function(){
-      this.getFlux().actions.getBookList();
+        this.getFlux().actions.getBookList();
     },
     render: function() {
         return (
@@ -214,12 +214,12 @@ App = React.createClass({
                 <ul className='nav navbar-nav'>
                   <li><Link to='app'>Index</Link></li>
                   <li><Link to='BooksList'>Books List</Link></li>
-                  <li><Link to='BooksCart'>Books Cars<Label flux={flux} /></Link></li>
+                  <li><Link to='BooksCart'>Books Cars<Label/></Link></li>
                 </ul>  
               </nav>
             </header>
             {/* this is the important part */}
-            <RouteHandler flux={flux}   />
+            <RouteHandler />
           </div>
           /*jshint ignore:end */
         );
@@ -229,11 +229,11 @@ App = React.createClass({
 var routes = (
   /*jshint ignore:start */
   <Route name='app' path='/' handler={App} location='histroy'>
-    <Route name='BooksList' handler={BooksList}>
-        <Route path=':selectId' name='select' handler={BookDetial}/>
-    </Route>
-    <Route name='BooksCart' handler={BooksCart}/>
-    <DefaultRoute  handler={Index}/>
+      <Route name='BooksList' handler={BooksList}>
+          <Route path=':selectId' name='select' handler={BookDetial}/>
+      </Route>
+      <Route name='BooksCart' handler={BooksCart}/>
+      <DefaultRoute  handler={Index}/>
   </Route>
   /*jshint ignore:end */ 
 );
