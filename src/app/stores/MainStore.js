@@ -8,16 +8,12 @@ MainStore = Fluxxor.createStore({
         this.booksList = [];
         this.cartsList=[];
         this.bindActions(
-            Constants.LOAD_BOOK_LIST,this.onLoadBookList,
             Constants.LOAD_BOOK_LIST_SUCCESS,this.onLoadBookListSucess,
             Constants.LOAD_FAIL,this.onloadFail,
 
             Constants.ADD_CART,this.onAddCart,
             Constants.DELETE_CART,this.onDeleteCart
         );
-    },
-    onLoadBookList:function(){
-
     },
     onLoadBookListSucess:function(res){
         this.booksList=res.data.bookList;

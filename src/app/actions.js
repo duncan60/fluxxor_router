@@ -10,7 +10,8 @@ var actions={
 	    logout: function(){  }
 	},
 	getBookList:function(){
-		this.dispatch(Constants.LOAD_BOOK_LIST,{msg:'get book list'});
+		//if should  add start event listener , you can add actions  
+		//this.dispatch(Constants.LOAD_BOOK_LIST,{msg:'get book list'});
 		APIServices.getBookList().then(
 			function(res){
 				this.dispatch(Constants.LOAD_BOOK_LIST_SUCCESS,{data:res});

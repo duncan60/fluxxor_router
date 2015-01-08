@@ -28604,7 +28604,8 @@ var actions={
 	    logout: function(){  }
 	},
 	getBookList:function(){
-		this.dispatch(Constants.LOAD_BOOK_LIST,{msg:'get book list'});
+		//if should  add start event listener , you can add actions  
+		//this.dispatch(Constants.LOAD_BOOK_LIST,{msg:'get book list'});
 		APIServices.getBookList().then(
 			function(res){
 				this.dispatch(Constants.LOAD_BOOK_LIST_SUCCESS,{data:res});
@@ -28967,16 +28968,12 @@ MainStore = Fluxxor.createStore({
         this.booksList = [];
         this.cartsList=[];
         this.bindActions(
-            Constants.LOAD_BOOK_LIST,this.onLoadBookList,
             Constants.LOAD_BOOK_LIST_SUCCESS,this.onLoadBookListSucess,
             Constants.LOAD_FAIL,this.onloadFail,
 
             Constants.ADD_CART,this.onAddCart,
             Constants.DELETE_CART,this.onDeleteCart
         );
-    },
-    onLoadBookList:function(){
-
     },
     onLoadBookListSucess:function(res){
         this.booksList=res.data.bookList;
