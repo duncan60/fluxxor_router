@@ -20,7 +20,9 @@ var React = require('react'),
 	BooksCart;
 
 BooksCart = React.createClass({
+    /*jshint ignore:start */
     mixins: [FluxMixin, StoreWatchMixin('MainStore')],
+    /*jshint ignore:end */
     getStateFromFlux: function() {
       var flux = this.getFlux();
       return flux.store('MainStore').getBooksCart();

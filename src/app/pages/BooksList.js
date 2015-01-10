@@ -20,13 +20,15 @@ var React = require('react'),
 	BooksList;
 
 BooksList = React.createClass({
+    /*jshint ignore:start */
     mixins: [Router.Navigation,FluxMixin, StoreWatchMixin('MainStore')],
+    /*jshint ignore:end */
     getStateFromFlux: function() {
         var flux = this.getFlux();
         return flux.store('MainStore').getBooksList ();
     },
     componentWillMount: function(){
-          this.transitionTo('/BooksList/1');
+        this.transitionTo('/BooksList/1');
     },
     render: function () {
         return (

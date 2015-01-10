@@ -19,7 +19,9 @@ var React = require('react'),
 	BooksDetial;
 
 BooksDetial = React.createClass({
+    /*jshint ignore:start */
     mixins: [Router.Navigation,Router.State,FluxMixin, StoreWatchMixin('MainStore')],
+    /*jshint ignore:end */
     getStateFromFlux: function() {
         var flux = this.getFlux();
         return flux.store('MainStore').getBooksList();
@@ -60,7 +62,5 @@ BooksDetial = React.createClass({
         );
     }
 });
-
-
 
 module.exports = BooksDetial;

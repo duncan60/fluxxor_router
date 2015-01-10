@@ -1,8 +1,8 @@
 
 'use strict';
 
-var Constants = require("./constants"),
-	APIServices= require("./services/APIServices");
+var Constants = require('./constants'),
+	APIServices= require('./services/APIServices');
 
 var actions={
 	//Namespaced Actions

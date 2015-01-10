@@ -28591,8 +28591,8 @@ module.exports=require('nakDgH');
 
 'use strict';
 
-var Constants = require("./constants"),
-	APIServices= require("./services/APIServices");
+var Constants = require('./constants'),
+	APIServices= require('./services/APIServices');
 
 var actions={
 	//Namespaced Actions
@@ -28635,7 +28635,9 @@ var React = require('react'),
 	Badge;
 
 Badge = React.createClass({displayName: "Badge",
+	/*jshint ignore:start */
 	mixins: [FluxMixin, StoreWatchMixin('MainStore')],
+	/*jshint ignore:end */
 	getStateFromFlux: function() {
 		var flux = this.getFlux();
 		return flux.store('MainStore').getBooksCart();
@@ -28676,7 +28678,9 @@ var React = require('react'),
 	BooksDetial;
 
 BooksDetial = React.createClass({displayName: "BooksDetial",
+    /*jshint ignore:start */
     mixins: [Router.Navigation,Router.State,FluxMixin, StoreWatchMixin('MainStore')],
+    /*jshint ignore:end */
     getStateFromFlux: function() {
         var flux = this.getFlux();
         return flux.store('MainStore').getBooksList();
@@ -28717,8 +28721,6 @@ BooksDetial = React.createClass({displayName: "BooksDetial",
         );
     }
 });
-
-
 
 module.exports = BooksDetial;
 },{"../actions":273,"../constants":277,"../stores/MainStore":284,"fluxxor":1,"react":"nakDgH","react-router":76}],276:[function(require,module,exports){
@@ -28809,9 +28811,9 @@ var stores = {
 var flux = new Fluxxor.Flux(stores,Actions);
 
 flux.on('dispatch', function(type, payload) {
-  if (console && console.log) {
-    console.log('[Dispatch]', type, payload);
-  }
+    if (console && console.log) {
+        console.log('[Dispatch]', type, payload);
+    }
 });
 
 App = React.createClass({displayName: "App",
@@ -28882,7 +28884,9 @@ var React = require('react'),
 	BooksCart;
 
 BooksCart = React.createClass({displayName: "BooksCart",
+    /*jshint ignore:start */
     mixins: [FluxMixin, StoreWatchMixin('MainStore')],
+    /*jshint ignore:end */
     getStateFromFlux: function() {
       var flux = this.getFlux();
       return flux.store('MainStore').getBooksCart();
@@ -28932,13 +28936,15 @@ var React = require('react'),
 	BooksList;
 
 BooksList = React.createClass({displayName: "BooksList",
+    /*jshint ignore:start */
     mixins: [Router.Navigation,FluxMixin, StoreWatchMixin('MainStore')],
+    /*jshint ignore:end */
     getStateFromFlux: function() {
         var flux = this.getFlux();
         return flux.store('MainStore').getBooksList ();
     },
     componentWillMount: function(){
-          this.transitionTo('/BooksList/1');
+        this.transitionTo('/BooksList/1');
     },
     render: function () {
         return (

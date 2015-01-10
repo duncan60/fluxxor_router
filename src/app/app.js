@@ -39,9 +39,9 @@ var stores = {
 var flux = new Fluxxor.Flux(stores,Actions);
 
 flux.on('dispatch', function(type, payload) {
-  if (console && console.log) {
-    console.log('[Dispatch]', type, payload);
-  }
+    if (console && console.log) {
+        console.log('[Dispatch]', type, payload);
+    }
 });
 
 App = React.createClass({
