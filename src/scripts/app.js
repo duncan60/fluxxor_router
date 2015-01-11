@@ -28631,16 +28631,16 @@ var React = require('react'),
     Fluxxor = require('fluxxor'),
     FluxMixin = Fluxxor.FluxMixin(React),
     StoreWatchMixin = Fluxxor.StoreWatchMixin,
-    MainStore = require('../stores/MainStore'),
+    BookStore = require('../stores/BookStore'),
 	Badge;
 
 Badge = React.createClass({displayName: "Badge",
 	/*jshint ignore:start */
-	mixins: [FluxMixin, StoreWatchMixin('MainStore')],
+	mixins: [FluxMixin, StoreWatchMixin('BookStore')],
 	/*jshint ignore:end */
 	getStateFromFlux: function() {
 		var flux = this.getFlux();
-		return flux.store('MainStore').getBooksCart();
+		return flux.store('BookStore').getBooksCart();
 	},
 	render: function(){
 		var hiedClass=cx({
@@ -28656,7 +28656,7 @@ Badge = React.createClass({displayName: "Badge",
 });
 
 module.exports = Badge;
-},{"../stores/MainStore":284,"fluxxor":1,"react":"nakDgH"}],275:[function(require,module,exports){
+},{"../stores/BookStore":284,"fluxxor":1,"react":"nakDgH"}],275:[function(require,module,exports){
 /** @jsx React.DOM */
 
 'use strict';
@@ -28674,16 +28674,16 @@ var React = require('react'),
     StoreWatchMixin = Fluxxor.StoreWatchMixin,
     Constants = require('../constants'),
     Actions = require('../actions'),
-    MainStore = require('../stores/MainStore'),
+    BookStore = require('../stores/BookStore'),
 	BooksDetial;
 
 BooksDetial = React.createClass({displayName: "BooksDetial",
     /*jshint ignore:start */
-    mixins: [Router.Navigation,Router.State,FluxMixin, StoreWatchMixin('MainStore')],
+    mixins: [Router.Navigation,Router.State,FluxMixin, StoreWatchMixin('BookStore')],
     /*jshint ignore:end */
     getStateFromFlux: function() {
         var flux = this.getFlux();
-        return flux.store('MainStore').getBooksList();
+        return flux.store('BookStore').getBooksList();
     },
     componentWillMount: function(){
         if(this.state.booksList.length===0){
@@ -28723,7 +28723,7 @@ BooksDetial = React.createClass({displayName: "BooksDetial",
 });
 
 module.exports = BooksDetial;
-},{"../actions":273,"../constants":277,"../stores/MainStore":284,"fluxxor":1,"react":"nakDgH","react-router":76}],276:[function(require,module,exports){
+},{"../actions":273,"../constants":277,"../stores/BookStore":284,"fluxxor":1,"react":"nakDgH","react-router":76}],276:[function(require,module,exports){
 /** @jsx React.DOM */
 
 'use strict';
@@ -28789,7 +28789,7 @@ var React = require('react'),
     StoreWatchMixin = Fluxxor.StoreWatchMixin,
     Constants = require('./constants'),
     Actions = require('./actions'),
-    MainStore = require('./stores/MainStore'),
+    BookStore = require('./stores/BookStore'),
     //page
     Index=require('./pages/Index'),
     NotFound=require('./pages/NotFound'),
@@ -28805,7 +28805,7 @@ var React = require('react'),
  *fluxxor
 */
 var stores = {
-    MainStore:new MainStore()
+    BookStore:new BookStore()
 };
 
 var flux = new Fluxxor.Flux(stores,Actions);
@@ -28861,7 +28861,7 @@ Router.run(routes, function (Handler,state) {
 /*jshint ignore:end */ 
 
 
-},{"./actions":273,"./components/Badge":274,"./components/BookDetial":275,"./constants":277,"./pages/BooksCart":279,"./pages/BooksList":280,"./pages/Index":281,"./pages/NotFound":282,"./stores/MainStore":284,"fluxxor":1,"react":"nakDgH","react-router":76,"react/addons":110}],279:[function(require,module,exports){
+},{"./actions":273,"./components/Badge":274,"./components/BookDetial":275,"./constants":277,"./pages/BooksCart":279,"./pages/BooksList":280,"./pages/Index":281,"./pages/NotFound":282,"./stores/BookStore":284,"fluxxor":1,"react":"nakDgH","react-router":76,"react/addons":110}],279:[function(require,module,exports){
 /** @jsx React.DOM */
 
 'use strict';
@@ -28879,17 +28879,17 @@ var React = require('react'),
     StoreWatchMixin = Fluxxor.StoreWatchMixin,
     Constants = require('../constants'),
     Actions = require('../actions'),
-    MainStore = require('../stores/MainStore'),
+    BookStore = require('../stores/BookStore'),
     DeleteCartItem=require('../components/DeleteCartItem'),
 	BooksCart;
 
 BooksCart = React.createClass({displayName: "BooksCart",
     /*jshint ignore:start */
-    mixins: [FluxMixin, StoreWatchMixin('MainStore')],
+    mixins: [FluxMixin, StoreWatchMixin('BookStore')],
     /*jshint ignore:end */
     getStateFromFlux: function() {
       var flux = this.getFlux();
-      return flux.store('MainStore').getBooksCart();
+      return flux.store('BookStore').getBooksCart();
     },
     deleteCarts: function(book){
       this.getFlux().actions.deleteCart(book);
@@ -28913,7 +28913,7 @@ BooksCart = React.createClass({displayName: "BooksCart",
 });
 
 module.exports = BooksCart;
-},{"../actions":273,"../components/DeleteCartItem":276,"../constants":277,"../stores/MainStore":284,"fluxxor":1,"react":"nakDgH","react-router":76}],280:[function(require,module,exports){
+},{"../actions":273,"../components/DeleteCartItem":276,"../constants":277,"../stores/BookStore":284,"fluxxor":1,"react":"nakDgH","react-router":76}],280:[function(require,module,exports){
 /** @jsx React.DOM */
 
 'use strict';
@@ -28931,17 +28931,17 @@ var React = require('react'),
     StoreWatchMixin = Fluxxor.StoreWatchMixin,
     Constants = require('../constants'),
     Actions = require('../actions'),
-    MainStore = require('../stores/MainStore'),
+    BookStore = require('../stores/BookStore'),
 
 	BooksList;
 
 BooksList = React.createClass({displayName: "BooksList",
     /*jshint ignore:start */
-    mixins: [Router.Navigation,FluxMixin, StoreWatchMixin('MainStore')],
+    mixins: [Router.Navigation,FluxMixin, StoreWatchMixin('BookStore')],
     /*jshint ignore:end */
     getStateFromFlux: function() {
         var flux = this.getFlux();
-        return flux.store('MainStore').getBooksList ();
+        return flux.store('BookStore').getBooksList ();
     },
     componentWillMount: function(){
         this.transitionTo('/BooksList/1');
@@ -28974,7 +28974,7 @@ BooksList = React.createClass({displayName: "BooksList",
 });
 
 module.exports = BooksList;
-},{"../actions":273,"../constants":277,"../stores/MainStore":284,"fluxxor":1,"react":"nakDgH","react-router":76}],281:[function(require,module,exports){
+},{"../actions":273,"../constants":277,"../stores/BookStore":284,"fluxxor":1,"react":"nakDgH","react-router":76}],281:[function(require,module,exports){
 /** @jsx React.DOM */
 
 'use strict';
@@ -29094,8 +29094,8 @@ module.exports = APIServices;
 
 var Fluxxor = require('fluxxor'), 
     Constants = require('../constants'),
-    MainStore;
-MainStore = Fluxxor.createStore({
+    BookStore;
+BookStore = Fluxxor.createStore({
     initialize : function(){
         this.booksList = [];
         this.cartsList=[];
@@ -29139,5 +29139,5 @@ MainStore = Fluxxor.createStore({
     }
 });
 
-module.exports=MainStore;
+module.exports=BookStore;
 },{"../constants":277,"fluxxor":1}]},{},[278])

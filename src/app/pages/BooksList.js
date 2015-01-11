@@ -15,17 +15,17 @@ var React = require('react'),
     StoreWatchMixin = Fluxxor.StoreWatchMixin,
     Constants = require('../constants'),
     Actions = require('../actions'),
-    MainStore = require('../stores/MainStore'),
+    BookStore = require('../stores/BookStore'),
 
 	BooksList;
 
 BooksList = React.createClass({
     /*jshint ignore:start */
-    mixins: [Router.Navigation,FluxMixin, StoreWatchMixin('MainStore')],
+    mixins: [Router.Navigation,FluxMixin, StoreWatchMixin('BookStore')],
     /*jshint ignore:end */
     getStateFromFlux: function() {
         var flux = this.getFlux();
-        return flux.store('MainStore').getBooksList ();
+        return flux.store('BookStore').getBooksList ();
     },
     componentWillMount: function(){
         this.transitionTo('/BooksList/1');

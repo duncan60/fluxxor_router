@@ -15,17 +15,17 @@ var React = require('react'),
     StoreWatchMixin = Fluxxor.StoreWatchMixin,
     Constants = require('../constants'),
     Actions = require('../actions'),
-    MainStore = require('../stores/MainStore'),
+    BookStore = require('../stores/BookStore'),
     DeleteCartItem=require('../components/DeleteCartItem'),
 	BooksCart;
 
 BooksCart = React.createClass({
     /*jshint ignore:start */
-    mixins: [FluxMixin, StoreWatchMixin('MainStore')],
+    mixins: [FluxMixin, StoreWatchMixin('BookStore')],
     /*jshint ignore:end */
     getStateFromFlux: function() {
       var flux = this.getFlux();
-      return flux.store('MainStore').getBooksCart();
+      return flux.store('BookStore').getBooksCart();
     },
     deleteCarts: function(book){
       this.getFlux().actions.deleteCart(book);

@@ -2,8 +2,8 @@
 
 var Fluxxor = require('fluxxor'), 
     Constants = require('../constants'),
-    MainStore;
-MainStore = Fluxxor.createStore({
+    BookStore;
+BookStore = Fluxxor.createStore({
     initialize : function(){
         this.booksList = [];
         this.cartsList=[];
@@ -47,4 +47,4 @@ MainStore = Fluxxor.createStore({
     }
 });
 
-module.exports=MainStore;
+module.exports=BookStore;

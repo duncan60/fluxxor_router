@@ -17,7 +17,7 @@ var React = require('react'),
     StoreWatchMixin = Fluxxor.StoreWatchMixin,
     Constants = require('./constants'),
     Actions = require('./actions'),
-    MainStore = require('./stores/MainStore'),
+    BookStore = require('./stores/BookStore'),
     //page
     Index=require('./pages/Index'),
     NotFound=require('./pages/NotFound'),
@@ -33,7 +33,7 @@ var React = require('react'),
  *fluxxor
 */
 var stores = {
-    MainStore:new MainStore()
+    BookStore:new BookStore()
 };
 
 var flux = new Fluxxor.Flux(stores,Actions);

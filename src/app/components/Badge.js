@@ -8,16 +8,16 @@ var React = require('react'),
     Fluxxor = require('fluxxor'),
     FluxMixin = Fluxxor.FluxMixin(React),
     StoreWatchMixin = Fluxxor.StoreWatchMixin,
-    MainStore = require('../stores/MainStore'),
+    BookStore = require('../stores/BookStore'),
 	Badge;
 
 Badge = React.createClass({
 	/*jshint ignore:start */
-	mixins: [FluxMixin, StoreWatchMixin('MainStore')],
+	mixins: [FluxMixin, StoreWatchMixin('BookStore')],
 	/*jshint ignore:end */
 	getStateFromFlux: function() {
 		var flux = this.getFlux();
-		return flux.store('MainStore').getBooksCart();
+		return flux.store('BookStore').getBooksCart();
 	},
 	render: function(){
 		var hiedClass=cx({

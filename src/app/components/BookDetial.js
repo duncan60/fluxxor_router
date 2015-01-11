@@ -15,16 +15,16 @@ var React = require('react'),
     StoreWatchMixin = Fluxxor.StoreWatchMixin,
     Constants = require('../constants'),
     Actions = require('../actions'),
-    MainStore = require('../stores/MainStore'),
+    BookStore = require('../stores/BookStore'),
 	BooksDetial;
 
 BooksDetial = React.createClass({
     /*jshint ignore:start */
-    mixins: [Router.Navigation,Router.State,FluxMixin, StoreWatchMixin('MainStore')],
+    mixins: [Router.Navigation,Router.State,FluxMixin, StoreWatchMixin('BookStore')],
     /*jshint ignore:end */
     getStateFromFlux: function() {
         var flux = this.getFlux();
-        return flux.store('MainStore').getBooksList();
+        return flux.store('BookStore').getBooksList();
     },
     componentWillMount: function(){
         if(this.state.booksList.length===0){
