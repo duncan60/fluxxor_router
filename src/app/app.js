@@ -75,7 +75,7 @@ App = React.createClass({
 
 var routes = (
   /*jshint ignore:start */
-  <Route name='app' path='/' handler={App} location='histroy'>
+  <Route name='app' path='/' handler={App}>
       <Route name='BooksList' handler={BooksList}>
           <Route path=':selectId' name='select' handler={BookDetial}/>
       </Route>
@@ -86,7 +86,7 @@ var routes = (
   /*jshint ignore:end */ 
 );
 /*jshint ignore:start */
-Router.run(routes, function (Handler,state) {
+Router.run(routes,Router.HistoryLocation, function (Handler,state) {
     React.render(<Handler flux={flux} />, document.getElementById('app'));
 });
 /*jshint ignore:end */ 

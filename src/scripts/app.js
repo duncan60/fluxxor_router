@@ -28824,7 +28824,7 @@ App = React.createClass({displayName: "App",
 
 var routes = (
   /*jshint ignore:start */
-  React.createElement(Route, {name: "app", path: "/", handler: App, location: "histroy"}, 
+  React.createElement(Route, {name: "app", path: "/", handler: App}, 
       React.createElement(Route, {name: "BooksList", handler: BooksList}, 
           React.createElement(Route, {path: ":selectId", name: "select", handler: BookDetial})
       ), 
@@ -28835,7 +28835,7 @@ var routes = (
   /*jshint ignore:end */ 
 );
 /*jshint ignore:start */
-Router.run(routes, function (Handler,state) {
+Router.run(routes,Router.HistoryLocation, function (Handler,state) {
     React.render(React.createElement(Handler, {flux: flux}), document.getElementById('app'));
 });
 /*jshint ignore:end */ 
