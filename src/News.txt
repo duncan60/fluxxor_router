@@ -1,0 +1,21 @@
+{
+	"result":1,
+	"msg":"sucess",
+	"bookList":[
+		{   
+                "date":"2015/1/1",
+                "title":"NEWS Title A",
+                "summary":"NEWS A summary........"
+            },
+            {   
+                "date":"2015/1/2",
+                "title":"NEWS Title B",
+                "summary":"NEWS B summary........"
+            },
+            {   
+                "date":"2015/1/3",
+                "title":"NEWS Title C",
+                "summary":"NEWS C summary........"
+            }
+	]
+}
