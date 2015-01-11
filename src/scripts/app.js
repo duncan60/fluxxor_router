@@ -28600,6 +28600,16 @@ var actions={
 	    login: function() {  },
 	    logout: function(){  }
 	},
+	getNewsList:function(){
+		APIServices.getNewsList().then(
+			function(res){
+				this.dispatch(Constants.LOAD_NEWS_LIST_SUCCESS,{data:res});
+			}.bind(this),
+			function(err) {
+		  		
+			}.bind(this)
+		);
+	},
 	getBookList:function(){
 		//if should  add start event listener , you can add actions  
 		//this.dispatch(Constants.LOAD_BOOK_LIST,{msg:'get book list'});
@@ -28609,8 +28619,8 @@ var actions={
 			}.bind(this),
 			function(err) {
 		  		this.dispatch(Constants.LOAD_FAIL,{res:err});
-				}.bind(this)
-			);
+			}.bind(this)
+		);
 	},
     addCart:function(book){
         this.dispatch(Constants.ADD_CART,{book:book});
@@ -28620,7 +28630,7 @@ var actions={
     }
 };
 module.exports=actions;
-},{"./constants":277,"./services/APIServices":283}],274:[function(require,module,exports){
+},{"./constants":276,"./services/APIServices":282}],274:[function(require,module,exports){
 /** @jsx React.DOM */
 
 'use strict';
@@ -28656,7 +28666,7 @@ Badge = React.createClass({displayName: "Badge",
 });
 
 module.exports = Badge;
-},{"../stores/BookStore":284,"fluxxor":1,"react":"nakDgH"}],275:[function(require,module,exports){
+},{"../stores/BookStore":283,"fluxxor":1,"react":"nakDgH"}],275:[function(require,module,exports){
 /** @jsx React.DOM */
 
 'use strict';
@@ -28723,53 +28733,20 @@ BooksDetial = React.createClass({displayName: "BooksDetial",
 });
 
 module.exports = BooksDetial;
-},{"../actions":273,"../constants":277,"../stores/BookStore":284,"fluxxor":1,"react":"nakDgH","react-router":76}],276:[function(require,module,exports){
-/** @jsx React.DOM */
-
-'use strict';
-
-var React = require('react'),
-	DeleteCartItem;
-
-DeleteCartItem = React.createClass({displayName: "DeleteCartItem",
-	propTypes: {
-		deleteCarts: React.PropTypes.func,
-		book: React.PropTypes.object.isRequired
-	},
-	getDefaultProps: function() {
-		return {
-		  deleteCarts:function(){},
-		  book: {}
-		};
-	},
-	deleteBook: function(){
-		this.props.deleteCarts(this.props.book);
-	},
-	render: function(){
-		return (
-		  /*jshint ignore:start */
-		  React.createElement("li", {className: "list-group-item"}, 
-		      "書名：", this.props.book.name, " 作者:", this.props.book.author, " ", React.createElement("a", {className: "btn btn-default", onClick: this.deleteBook}, " delete ")
-		  )
-		  /*jshint ignore:end */
-		);
-	}
-});
-
-module.exports = DeleteCartItem;
-},{"react":"nakDgH"}],277:[function(require,module,exports){
+},{"../actions":273,"../constants":276,"../stores/BookStore":283,"fluxxor":1,"react":"nakDgH","react-router":76}],276:[function(require,module,exports){
 'use strict';
 
 var Constants = {
-	LOAD_BOOK_LIST:'LOAD_BOOK_LIST',
+	LOAD_NEWS_LIST_SUCCESS:'LOAD_NEWS_LIST_SUCCESS',
 	LOAD_BOOK_LIST_SUCCESS:'LOAD_BOOK_LIST_SUCCESS',
+	
 	LOAD_FAIL:'LOAD_FAIL',
 
   	ADD_CART: 'ADD_CART',
   	DELETE_CART: 'DELETE_CART'
 };
 module.exports=Constants;
-},{}],278:[function(require,module,exports){
+},{}],277:[function(require,module,exports){
 /** @jsx React.DOM */
 
 'use strict';
@@ -28790,6 +28767,7 @@ var React = require('react'),
     Constants = require('./constants'),
     Actions = require('./actions'),
     BookStore = require('./stores/BookStore'),
+    NewsStore = require('./stores/NewsStore'),
     //page
     Index=require('./pages/Index'),
     NotFound=require('./pages/NotFound'),
@@ -28805,8 +28783,9 @@ var React = require('react'),
  *fluxxor
 */
 var stores = {
-    BookStore:new BookStore()
-};
+    BookStore:new BookStore(),
+    NewsStore:new NewsStore()
+};  
 
 var flux = new Fluxxor.Flux(stores,Actions);
 
@@ -28820,6 +28799,7 @@ App = React.createClass({displayName: "App",
     mixins: [FluxMixin],
     componentDidMount: function(){
         this.getFlux().actions.getBookList();
+        this.getFlux().actions.getNewsList();
     },
     render: function() {
         return (
@@ -28861,27 +28841,24 @@ Router.run(routes, function (Handler,state) {
 /*jshint ignore:end */ 
 
 
-},{"./actions":273,"./components/Badge":274,"./components/BookDetial":275,"./constants":277,"./pages/BooksCart":279,"./pages/BooksList":280,"./pages/Index":281,"./pages/NotFound":282,"./stores/BookStore":284,"fluxxor":1,"react":"nakDgH","react-router":76,"react/addons":110}],279:[function(require,module,exports){
+},{"./actions":273,"./components/Badge":274,"./components/BookDetial":275,"./constants":276,"./pages/BooksCart":278,"./pages/BooksList":279,"./pages/Index":280,"./pages/NotFound":281,"./stores/BookStore":283,"./stores/NewsStore":284,"fluxxor":1,"react":"nakDgH","react-router":76,"react/addons":110}],278:[function(require,module,exports){
 /** @jsx React.DOM */
 
 'use strict';
 
 var React = require('react'),
-	cx=React.addons.classSet,
-	//router
+	  cx=React.addons.classSet,
+	  //router
     Router = require('react-router'),
     Route = Router.Route,
     RouteHandler = Router.RouteHandler,
     Link = Router.Link,
-     //fluxxor
+    //fluxxor
     Fluxxor = require('fluxxor'),
     FluxMixin = Fluxxor.FluxMixin(React),
     StoreWatchMixin = Fluxxor.StoreWatchMixin,
-    Constants = require('../constants'),
-    Actions = require('../actions'),
-    BookStore = require('../stores/BookStore'),
-    DeleteCartItem=require('../components/DeleteCartItem'),
-	BooksCart;
+    
+	  BooksCart;
 
 BooksCart = React.createClass({displayName: "BooksCart",
     /*jshint ignore:start */
@@ -28913,7 +28890,7 @@ BooksCart = React.createClass({displayName: "BooksCart",
 });
 
 module.exports = BooksCart;
-},{"../actions":273,"../components/DeleteCartItem":276,"../constants":277,"../stores/BookStore":284,"fluxxor":1,"react":"nakDgH","react-router":76}],280:[function(require,module,exports){
+},{"fluxxor":1,"react":"nakDgH","react-router":76}],279:[function(require,module,exports){
 /** @jsx React.DOM */
 
 'use strict';
@@ -28929,22 +28906,21 @@ var React = require('react'),
     Fluxxor = require('fluxxor'),
     FluxMixin = Fluxxor.FluxMixin(React),
     StoreWatchMixin = Fluxxor.StoreWatchMixin,
-    Constants = require('../constants'),
-    Actions = require('../actions'),
-    BookStore = require('../stores/BookStore'),
 
 	BooksList;
 
 BooksList = React.createClass({displayName: "BooksList",
     /*jshint ignore:start */
-    mixins: [Router.Navigation,FluxMixin, StoreWatchMixin('BookStore')],
+    mixins: [Router.Navigation,Router.State,FluxMixin, StoreWatchMixin('BookStore')],
     /*jshint ignore:end */
     getStateFromFlux: function() {
         var flux = this.getFlux();
         return flux.store('BookStore').getBooksList ();
     },
     componentWillMount: function(){
-        this.transitionTo('/BooksList/1');
+        if(!this.getParams().selectId){
+            this.transitionTo('/BooksList/1');
+        }
     },
     render: function () {
         return (
@@ -28974,27 +28950,64 @@ BooksList = React.createClass({displayName: "BooksList",
 });
 
 module.exports = BooksList;
-},{"../actions":273,"../constants":277,"../stores/BookStore":284,"fluxxor":1,"react":"nakDgH","react-router":76}],281:[function(require,module,exports){
+},{"fluxxor":1,"react":"nakDgH","react-router":76}],280:[function(require,module,exports){
 /** @jsx React.DOM */
 
 'use strict';
 
 var React = require('react'),
-	Index;
+    //fluxxor
+    Fluxxor = require('fluxxor'),
+    FluxMixin = Fluxxor.FluxMixin(React),
+    StoreWatchMixin = Fluxxor.StoreWatchMixin,
+    Index;
 
 Index = React.createClass({displayName: "Index",
-      render: function () {
-        return (
-          /*jshint ignore:start */
-          React.createElement("div", null, 
-            React.createElement("h1", null, "Index")
+    /*jshint ignore:start */
+    mixins: [FluxMixin, StoreWatchMixin('BookStore','NewsStore')],
+    /*jshint ignore:end */
+    getStateFromFlux: function() {
+      var flux = this.getFlux();
+      return {
+        book:flux.store('BookStore').getBooksList(),
+        news:flux.store('NewsStore').getNewsList()
+      };
+    },
+    componentWillMount: function(){
+        console.log(this.state);
+    },
+    render: function () {
+      return (
+        /*jshint ignore:start */
+        React.createElement("div", null, 
+          React.createElement("h2", null, "NEWS"), 
+          React.createElement("ul", {className: "list-group"}, 
+            this.state.news.newsList.map(function(news,i){
+              return (
+                React.createElement("li", {key: i, className: "list-group-item"}, 
+                    news.date, " - ", news.title, " - ", news.summary
+                )
+              )}
+            )
+          ), 
+          React.createElement("h2", null, "Books"), 
+          React.createElement("ul", {className: "list-group"}, 
+            this.state.book.booksList.map(function(book,i){
+              return (
+                React.createElement("li", {key: i, className: "list-group-item"}, 
+                    "書名：", book.name, " 作者：", book.author, 
+                    React.createElement("a", {href: "#/BooksList/"+book.id, className: "btn btn-default"}, "more")
+                )
+              )}
+            )
           )
-          /*jshint ignore:end */
-        );
-      }
+        )
+        /*jshint ignore:end */
+      );
+    }
 });
 module.exports = Index;
-},{"react":"nakDgH"}],282:[function(require,module,exports){
+},{"fluxxor":1,"react":"nakDgH"}],281:[function(require,module,exports){
 /** @jsx React.DOM */
 
 'use strict';
@@ -29014,7 +29027,7 @@ NotFound = React.createClass({displayName: "NotFound",
       }
 });
 module.exports = NotFound;
-},{"react":"nakDgH"}],283:[function(require,module,exports){
+},{"react":"nakDgH"}],282:[function(require,module,exports){
 /*
  * API Services
  */
@@ -29023,65 +29036,30 @@ module.exports = NotFound;
 var APIServices;
 
 APIServices = (function() {
-    var API_URL = '',
-        TICKET = '',
-        API = {
-            BOOKLIST: 'bookList.txt',
-           
+    var API = {
+            NEWSLIST: 'NewsList.txt',
+            BOOKLIST: 'bookList.txt'
         };
     return {
-        init: function() {
-          
-        },
-        create: function(args) {
-            var argsPath = args.path,
-                promise = $.ajax({
-                    url: API_URL+argsPath+'/',
-                    type: 'POST',
-                    dataType: 'json',
-                    cache: false,
-                    data: JSON.stringify(args.data),
-                    contentType: 'application/json; charset=utf-8'
-                });
-            return promise;
-        },
-        update: function(args) {
-            var argsPath = args.path,
-                promise = $.ajax({
-                    url: API_URL+argsPath+'/',
-                    type: 'PUT',
-                    dataType: 'json',
-                    cache: false,
-                    data: JSON.stringify(args.data),
-                    contentType: 'application/json; charset=utf-8'
-                });
-            return promise;
-        },
-        where: function(args) {
-            var argsPath = args.path,
-                argsData = encodeURI(JSON.stringify(args.data)),
-                promise = $.ajax({
-                    url: API_URL+argsPath+'/?req='+argsData,
-                    type: 'GET',
-                    dataType: 'json',
-                    cache: false,
-                    contentType: 'application/json; charset=utf-8'
-                });
-            return promise;
-        },
         getJson: function(args){
             var promise= $.ajax({
                   dataType: 'json',
                   url: args.path,
                 });
-
+            return promise;
+        },
+        getNewsList: function() {
+            var args = {
+                    path: API.NEWSLIST
+                },
+            promise = this.getJson(args);
             return promise;
         },
         getBookList: function() {
             var args = {
                     path: API.BOOKLIST
                 },
-                promise = this.getJson(args);
+            promise = this.getJson(args);
             return promise;
         }
     };
@@ -29089,7 +29067,7 @@ APIServices = (function() {
 
 module.exports = APIServices;
 
-},{}],284:[function(require,module,exports){
+},{}],283:[function(require,module,exports){
 'use strict';
 
 var Fluxxor = require('fluxxor'), 
@@ -29140,4 +29118,29 @@ BookStore = Fluxxor.createStore({
 });
 
 module.exports=BookStore;
-},{"../constants":277,"fluxxor":1}]},{},[278])
+},{"../constants":276,"fluxxor":1}],284:[function(require,module,exports){
+'use strict';
+
+var Fluxxor = require('fluxxor'), 
+    Constants = require('../constants'),
+    NewsStore;
+NewsStore = Fluxxor.createStore({
+    initialize : function(){
+        this.newsList = [];
+        this.bindActions(
+            Constants.LOAD_NEWS_LIST_SUCCESS,this.onLoadNewsListSucess
+        );
+    },
+    onLoadNewsListSucess:function(res){
+        this.newsList=res.data.newsList;
+        this.emit('change');
+    },
+    getNewsList: function(){
+        return {
+          newsList: this.newsList
+        };
+    }
+});
+
+module.exports=NewsStore;
+},{"../constants":276,"fluxxor":1}]},{},[277])

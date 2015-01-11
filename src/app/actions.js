@@ -10,6 +10,16 @@ var actions={
 	    login: function() {  },
 	    logout: function(){  }
 	},
+	getNewsList:function(){
+		APIServices.getNewsList().then(
+			function(res){
+				this.dispatch(Constants.LOAD_NEWS_LIST_SUCCESS,{data:res});
+			}.bind(this),
+			function(err) {
+		  		
+			}.bind(this)
+		);
+	},
 	getBookList:function(){
 		//if should  add start event listener , you can add actions  
 		//this.dispatch(Constants.LOAD_BOOK_LIST,{msg:'get book list'});
@@ -19,8 +29,8 @@ var actions={
 			}.bind(this),
 			function(err) {
 		  		this.dispatch(Constants.LOAD_FAIL,{res:err});
-				}.bind(this)
-			);
+			}.bind(this)
+		);
 	},
     addCart:function(book){
         this.dispatch(Constants.ADD_CART,{book:book});

@@ -18,6 +18,7 @@ var React = require('react'),
     Constants = require('./constants'),
     Actions = require('./actions'),
     BookStore = require('./stores/BookStore'),
+    NewsStore = require('./stores/NewsStore'),
     //page
     Index=require('./pages/Index'),
     NotFound=require('./pages/NotFound'),
@@ -33,8 +34,9 @@ var React = require('react'),
  *fluxxor
 */
 var stores = {
-    BookStore:new BookStore()
-};
+    BookStore:new BookStore(),
+    NewsStore:new NewsStore()
+};  
 
 var flux = new Fluxxor.Flux(stores,Actions);
 
@@ -48,6 +50,7 @@ App = React.createClass({
     mixins: [FluxMixin],
     componentDidMount: function(){
         this.getFlux().actions.getBookList();
+        this.getFlux().actions.getNewsList();
     },
     render: function() {
         return (

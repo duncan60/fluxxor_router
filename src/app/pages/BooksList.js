@@ -13,22 +13,21 @@ var React = require('react'),
     Fluxxor = require('fluxxor'),
     FluxMixin = Fluxxor.FluxMixin(React),
     StoreWatchMixin = Fluxxor.StoreWatchMixin,
-    Constants = require('../constants'),
-    Actions = require('../actions'),
-    BookStore = require('../stores/BookStore'),
 
 	BooksList;
 
 BooksList = React.createClass({
     /*jshint ignore:start */
-    mixins: [Router.Navigation,FluxMixin, StoreWatchMixin('BookStore')],
+    mixins: [Router.Navigation,Router.State,FluxMixin, StoreWatchMixin('BookStore')],
     /*jshint ignore:end */
     getStateFromFlux: function() {
         var flux = this.getFlux();
         return flux.store('BookStore').getBooksList ();
     },
     componentWillMount: function(){
-        this.transitionTo('/BooksList/1');
+        if(!this.getParams().selectId){
+            this.transitionTo('/BooksList/1');
+        }
     },
     render: function () {
         return (

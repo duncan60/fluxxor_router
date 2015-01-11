@@ -3,21 +3,18 @@
 'use strict';
 
 var React = require('react'),
-	cx=React.addons.classSet,
-	//router
+	  cx=React.addons.classSet,
+	  //router
     Router = require('react-router'),
     Route = Router.Route,
     RouteHandler = Router.RouteHandler,
     Link = Router.Link,
-     //fluxxor
+    //fluxxor
     Fluxxor = require('fluxxor'),
     FluxMixin = Fluxxor.FluxMixin(React),
     StoreWatchMixin = Fluxxor.StoreWatchMixin,
-    Constants = require('../constants'),
-    Actions = require('../actions'),
-    BookStore = require('../stores/BookStore'),
-    DeleteCartItem=require('../components/DeleteCartItem'),
-	BooksCart;
+    
+	  BooksCart;
 
 BooksCart = React.createClass({
     /*jshint ignore:start */
