@@ -86,7 +86,7 @@ var routes = (
   /*jshint ignore:end */ 
 );
 /*jshint ignore:start */
-Router.run(routes,Router.HistoryLocation, function (Handler,state) {
+Router.run(routes, function (Handler,state) {
     React.render(<Handler flux={flux} />, document.getElementById('app'));
 });
 /*jshint ignore:end */ 

@@ -28835,7 +28835,7 @@ var routes = (
   /*jshint ignore:end */ 
 );
 /*jshint ignore:start */
-Router.run(routes,Router.HistoryLocation, function (Handler,state) {
+Router.run(routes, function (Handler,state) {
     React.render(React.createElement(Handler, {flux: flux}), document.getElementById('app'));
 });
 /*jshint ignore:end */ 
