@@ -28712,11 +28712,11 @@ BooksDetial = React.createClass({displayName: "BooksDetial",
                 return book.id === selectId;
             }),
             addClass=cx({
-                'hide': book[0].select||true,
+                'hide': book[0].select||false,
                 'btn btn-default':true
             }),
             removeClass=cx({
-                'hide': !book[0].select||true,
+                'hide': !book[0].select||false,
                 'btn btn-default':true
             });
         return(
