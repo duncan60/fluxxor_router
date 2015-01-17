@@ -28759,6 +28759,7 @@ var React = require('react'),
     DefaultRoute = Router.DefaultRoute,
     RouteHandler = Router.RouteHandler,
     NotFoundRoute = Router.NotFoundRoute,
+    Redirect = Router.Redirect,
     Link = Router.Link,
     //fluxxor
     Fluxxor = require('fluxxor'),
@@ -28830,7 +28831,8 @@ var routes = (
       ), 
       React.createElement(Route, {name: "BooksCart", handler: BooksCart}), 
       React.createElement(DefaultRoute, {handler: Index}), 
-      React.createElement(NotFoundRoute, {handler: NotFound})
+      React.createElement(NotFoundRoute, {handler: NotFound}), 
+      React.createElement(Redirect, {from: "redirect-bookslist", to: "BooksList"})
   )
   /*jshint ignore:end */ 
 );

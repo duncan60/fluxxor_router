@@ -10,6 +10,7 @@ var React = require('react'),
     DefaultRoute = Router.DefaultRoute,
     RouteHandler = Router.RouteHandler,
     NotFoundRoute = Router.NotFoundRoute,
+    Redirect = Router.Redirect,
     Link = Router.Link,
     //fluxxor
     Fluxxor = require('fluxxor'),
@@ -82,6 +83,7 @@ var routes = (
       <Route name='BooksCart' handler={BooksCart}/>
       <DefaultRoute  handler={Index}/>
       <NotFoundRoute handler={NotFound}/>
+      <Redirect from="redirect-bookslist" to="BooksList" />
   </Route>
   /*jshint ignore:end */ 
 );
