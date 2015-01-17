@@ -55,37 +55,37 @@ App = React.createClass({
     },
     render: function() {
         return (
-        	/*jshint ignore:start */
-          <div>
-            <header>
-              <nav className='navbar navbar-default'>
-                <ul className='nav navbar-nav'>
-                  <li><Link to='app'>Index</Link></li>
-                  <li><Link to='BooksList'>Books List</Link></li>
-                  <li><Link to='BooksCart'>Books Cars<Badge/></Link></li>
-                </ul>  
-              </nav>
-            </header>
-            {/* this is the important part */}
-            <RouteHandler />
-          </div>
-          /*jshint ignore:end */
+            /*jshint ignore:start */
+            <div>
+                <header>
+                    <nav className='navbar navbar-default'>
+                        <ul className='nav navbar-nav'>
+                            <li><Link to='app'>Index</Link></li>
+                            <li><Link to='BooksList'>Books List</Link></li>
+                            <li><Link to='BooksCart'>Books Cars<Badge/></Link></li>
+                        </ul>  
+                    </nav>
+                </header>
+                {/* this is the important part */}
+                <RouteHandler />
+            </div>
+            /*jshint ignore:end */
         );
     }
 });
 
 var routes = (
-  /*jshint ignore:start */
-  <Route name='app' path='/' handler={App}>
-      <Route name='BooksList' handler={BooksList}>
-          <Route path=':selectId' name='select' handler={BookDetial}/>
-      </Route>
-      <Route name='BooksCart' handler={BooksCart}/>
-      <DefaultRoute  handler={Index}/>
-      <NotFoundRoute handler={NotFound}/>
-      <Redirect from="redirect-bookslist" to="BooksList" />
-  </Route>
-  /*jshint ignore:end */ 
+    /*jshint ignore:start */
+    <Route name='app' path='/' handler={App}>
+        <Route name='BooksList' handler={BooksList}>
+        <Route path=':selectId' name='select' handler={BookDetial}/>
+        </Route>
+        <Route name='BooksCart' handler={BooksCart}/>
+        <DefaultRoute  handler={Index}/>
+        <NotFoundRoute handler={NotFound}/>
+        <Redirect from="redirect-bookslist" to="BooksList" />
+    </Route>
+    /*jshint ignore:end */ 
 );
 /*jshint ignore:start */
 Router.run(routes, function (Handler,state) {

@@ -16,7 +16,7 @@ NewsStore = Fluxxor.createStore({
     },
     getNewsList: function(){
         return {
-          newsList: this.newsList
+            newsList: this.newsList
         };
     }
 });

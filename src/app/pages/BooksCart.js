@@ -3,8 +3,8 @@
 'use strict';
 
 var React = require('react'),
-	  cx=React.addons.classSet,
-	  //router
+    cx=React.addons.classSet,
+    //router
     Router = require('react-router'),
     Route = Router.Route,
     RouteHandler = Router.RouteHandler,
@@ -14,7 +14,8 @@ var React = require('react'),
     FluxMixin = Fluxxor.FluxMixin(React),
     StoreWatchMixin = Fluxxor.StoreWatchMixin,
     
-	  BooksCart;
+    DeleteCartItem = require('../components/DeleteCartItem'),
+    BooksCart;
 
 BooksCart = React.createClass({
     /*jshint ignore:start */
@@ -36,7 +37,7 @@ BooksCart = React.createClass({
             <ul className='list-group'>
                 {this.state.cartsList.map(function(book,i){
                     return  <DeleteCartItem key={i} book={book} deleteCarts={that.deleteCarts} />
-                  }.bind(that)
+                }.bind(that)
                 )}
             </ul>
           </div>

@@ -28630,50 +28630,50 @@ var actions={
     }
 };
 module.exports=actions;
-},{"./constants":276,"./services/APIServices":282}],274:[function(require,module,exports){
+},{"./constants":277,"./services/APIServices":283}],274:[function(require,module,exports){
 /** @jsx React.DOM */
 
 'use strict';
 
 var React = require('react'),
-	cx = React.addons.classSet,
-	 //fluxxor
+    cx = React.addons.classSet,
+     //fluxxor
     Fluxxor = require('fluxxor'),
     FluxMixin = Fluxxor.FluxMixin(React),
     StoreWatchMixin = Fluxxor.StoreWatchMixin,
     BookStore = require('../stores/BookStore'),
-	Badge;
+    Badge;
 
 Badge = React.createClass({displayName: "Badge",
-	/*jshint ignore:start */
-	mixins: [FluxMixin, StoreWatchMixin('BookStore')],
-	/*jshint ignore:end */
-	getStateFromFlux: function() {
-		var flux = this.getFlux();
-		return flux.store('BookStore').getBooksCart();
-	},
-	render: function(){
-		var hiedClass=cx({
-			  'hide': this.state.cartsList.length>0?false:true,
-			  'badge': true
-			});
-		return(
-		  	/*jshint ignore:start */
-		 	React.createElement("span", {className: hiedClass}, this.state.cartsList.length)
-		  	/*jshint ignore:end */
-		);
-	}
+    /*jshint ignore:start */
+    mixins: [FluxMixin, StoreWatchMixin('BookStore')],
+    /*jshint ignore:end */
+    getStateFromFlux: function() {
+        var flux = this.getFlux();
+        return flux.store('BookStore').getBooksCart();
+    },
+    render: function(){
+        var hiedClass=cx({
+              'hide': this.state.cartsList.length>0?false:true,
+              'badge': true
+            });
+        return(
+            /*jshint ignore:start */
+            React.createElement("span", {className: hiedClass}, this.state.cartsList.length)
+            /*jshint ignore:end */
+        );
+    }
 });
 
 module.exports = Badge;
-},{"../stores/BookStore":283,"fluxxor":1,"react":"nakDgH"}],275:[function(require,module,exports){
+},{"../stores/BookStore":284,"fluxxor":1,"react":"nakDgH"}],275:[function(require,module,exports){
 /** @jsx React.DOM */
 
 'use strict';
 
 var React = require('react'),
-	cx=React.addons.classSet,
-	//router
+    cx=React.addons.classSet,
+    //router
     Router = require('react-router'),
     Route = Router.Route,
     RouteHandler = Router.RouteHandler,
@@ -28685,7 +28685,7 @@ var React = require('react'),
     Constants = require('../constants'),
     Actions = require('../actions'),
     BookStore = require('../stores/BookStore'),
-	BooksDetial;
+    BooksDetial;
 
 BooksDetial = React.createClass({displayName: "BooksDetial",
     /*jshint ignore:start */
@@ -28712,11 +28712,11 @@ BooksDetial = React.createClass({displayName: "BooksDetial",
                 return book.id === selectId;
             }),
             addClass=cx({
-                'hide': book[0].select,
+                'hide': book[0].select||true,
                 'btn btn-default':true
             }),
             removeClass=cx({
-                'hide': !book[0].select,
+                'hide': !book[0].select||true,
                 'btn btn-default':true
             });
         return(
@@ -28733,7 +28733,41 @@ BooksDetial = React.createClass({displayName: "BooksDetial",
 });
 
 module.exports = BooksDetial;
-},{"../actions":273,"../constants":276,"../stores/BookStore":283,"fluxxor":1,"react":"nakDgH","react-router":76}],276:[function(require,module,exports){
+},{"../actions":273,"../constants":277,"../stores/BookStore":284,"fluxxor":1,"react":"nakDgH","react-router":76}],276:[function(require,module,exports){
+/** @jsx React.DOM */
+
+'use strict';
+
+var React = require('react'),
+    DeleteCartItem;
+
+DeleteCartItem = React.createClass({displayName: "DeleteCartItem",
+    propTypes: {
+        deleteCarts: React.PropTypes.func,
+        book: React.PropTypes.object.isRequired
+    },
+    getDefaultProps: function() {
+        return {
+            deleteCarts:function(){},
+            book: {}
+        };
+    },
+    deleteBook: function(){
+        this.props.deleteCarts(this.props.book);
+    },
+    render: function(){
+        return (
+          /*jshint ignore:start */
+          React.createElement("li", {className: "list-group-item"}, 
+                "書名：", this.props.book.name, " 作者:", this.props.book.author, " ", React.createElement("a", {className: "btn btn-default", onClick: this.deleteBook}, " delete ")
+          )
+          /*jshint ignore:end */
+        );
+    }
+});
+
+module.exports = DeleteCartItem;
+},{"react":"nakDgH"}],277:[function(require,module,exports){
 'use strict';
 
 var Constants = {
@@ -28746,7 +28780,7 @@ var Constants = {
   	DELETE_CART: 'DELETE_CART'
 };
 module.exports=Constants;
-},{}],277:[function(require,module,exports){
+},{}],278:[function(require,module,exports){
 /** @jsx React.DOM */
 
 'use strict';
@@ -28804,37 +28838,37 @@ App = React.createClass({displayName: "App",
     },
     render: function() {
         return (
-        	/*jshint ignore:start */
-          React.createElement("div", null, 
-            React.createElement("header", null, 
-              React.createElement("nav", {className: "navbar navbar-default"}, 
-                React.createElement("ul", {className: "nav navbar-nav"}, 
-                  React.createElement("li", null, React.createElement(Link, {to: "app"}, "Index")), 
-                  React.createElement("li", null, React.createElement(Link, {to: "BooksList"}, "Books List")), 
-                  React.createElement("li", null, React.createElement(Link, {to: "BooksCart"}, "Books Cars", React.createElement(Badge, null)))
-                )
-              )
-            ), 
-            /* this is the important part */
-            React.createElement(RouteHandler, null)
-          )
-          /*jshint ignore:end */
+            /*jshint ignore:start */
+            React.createElement("div", null, 
+                React.createElement("header", null, 
+                    React.createElement("nav", {className: "navbar navbar-default"}, 
+                        React.createElement("ul", {className: "nav navbar-nav"}, 
+                            React.createElement("li", null, React.createElement(Link, {to: "app"}, "Index")), 
+                            React.createElement("li", null, React.createElement(Link, {to: "BooksList"}, "Books List")), 
+                            React.createElement("li", null, React.createElement(Link, {to: "BooksCart"}, "Books Cars", React.createElement(Badge, null)))
+                        )
+                    )
+                ), 
+                /* this is the important part */
+                React.createElement(RouteHandler, null)
+            )
+            /*jshint ignore:end */
         );
     }
 });
 
 var routes = (
-  /*jshint ignore:start */
-  React.createElement(Route, {name: "app", path: "/", handler: App}, 
-      React.createElement(Route, {name: "BooksList", handler: BooksList}, 
-          React.createElement(Route, {path: ":selectId", name: "select", handler: BookDetial})
-      ), 
-      React.createElement(Route, {name: "BooksCart", handler: BooksCart}), 
-      React.createElement(DefaultRoute, {handler: Index}), 
-      React.createElement(NotFoundRoute, {handler: NotFound}), 
-      React.createElement(Redirect, {from: "redirect-bookslist", to: "BooksList"})
-  )
-  /*jshint ignore:end */ 
+    /*jshint ignore:start */
+    React.createElement(Route, {name: "app", path: "/", handler: App}, 
+        React.createElement(Route, {name: "BooksList", handler: BooksList}, 
+        React.createElement(Route, {path: ":selectId", name: "select", handler: BookDetial})
+        ), 
+        React.createElement(Route, {name: "BooksCart", handler: BooksCart}), 
+        React.createElement(DefaultRoute, {handler: Index}), 
+        React.createElement(NotFoundRoute, {handler: NotFound}), 
+        React.createElement(Redirect, {from: "redirect-bookslist", to: "BooksList"})
+    )
+    /*jshint ignore:end */ 
 );
 /*jshint ignore:start */
 Router.run(routes, function (Handler,state) {
@@ -28843,14 +28877,14 @@ Router.run(routes, function (Handler,state) {
 /*jshint ignore:end */ 
 
 
-},{"./actions":273,"./components/Badge":274,"./components/BookDetial":275,"./constants":276,"./pages/BooksCart":278,"./pages/BooksList":279,"./pages/Index":280,"./pages/NotFound":281,"./stores/BookStore":283,"./stores/NewsStore":284,"fluxxor":1,"react":"nakDgH","react-router":76,"react/addons":110}],278:[function(require,module,exports){
+},{"./actions":273,"./components/Badge":274,"./components/BookDetial":275,"./constants":277,"./pages/BooksCart":279,"./pages/BooksList":280,"./pages/Index":281,"./pages/NotFound":282,"./stores/BookStore":284,"./stores/NewsStore":285,"fluxxor":1,"react":"nakDgH","react-router":76,"react/addons":110}],279:[function(require,module,exports){
 /** @jsx React.DOM */
 
 'use strict';
 
 var React = require('react'),
-	  cx=React.addons.classSet,
-	  //router
+    cx=React.addons.classSet,
+    //router
     Router = require('react-router'),
     Route = Router.Route,
     RouteHandler = Router.RouteHandler,
@@ -28860,7 +28894,8 @@ var React = require('react'),
     FluxMixin = Fluxxor.FluxMixin(React),
     StoreWatchMixin = Fluxxor.StoreWatchMixin,
     
-	  BooksCart;
+    DeleteCartItem = require('../components/DeleteCartItem'),
+    BooksCart;
 
 BooksCart = React.createClass({displayName: "BooksCart",
     /*jshint ignore:start */
@@ -28882,7 +28917,7 @@ BooksCart = React.createClass({displayName: "BooksCart",
             React.createElement("ul", {className: "list-group"}, 
                 this.state.cartsList.map(function(book,i){
                     return  React.createElement(DeleteCartItem, {key: i, book: book, deleteCarts: that.deleteCarts})
-                  }.bind(that)
+                }.bind(that)
                 )
             )
           )
@@ -28892,14 +28927,14 @@ BooksCart = React.createClass({displayName: "BooksCart",
 });
 
 module.exports = BooksCart;
-},{"fluxxor":1,"react":"nakDgH","react-router":76}],279:[function(require,module,exports){
+},{"../components/DeleteCartItem":276,"fluxxor":1,"react":"nakDgH","react-router":76}],280:[function(require,module,exports){
 /** @jsx React.DOM */
 
 'use strict';
 
 var React = require('react'),
-	cx=React.addons.classSet,
-	//router
+    cx=React.addons.classSet,
+    //router
     Router = require('react-router'),
     Route = Router.Route,
     RouteHandler = Router.RouteHandler,
@@ -28909,7 +28944,7 @@ var React = require('react'),
     FluxMixin = Fluxxor.FluxMixin(React),
     StoreWatchMixin = Fluxxor.StoreWatchMixin,
 
-	BooksList;
+    BooksList;
 
 BooksList = React.createClass({displayName: "BooksList",
     /*jshint ignore:start */
@@ -28927,32 +28962,32 @@ BooksList = React.createClass({displayName: "BooksList",
     render: function () {
         return (
             /*jshint ignore:start */
-        	React.createElement("div", null, 
-	            React.createElement("h1", null, "Books List"), 
-	            React.createElement("ul", {className: "list-group"}, 
-	                this.state.booksList.map(function(book,i){
-	                    var spanClass=cx({
-	                    	  'glyphicon glyphicon-shopping-cart': book.select
-	                   		 });
-	                  	return  (
-		                  	React.createElement("li", {className: "list-group-item", key: i}, 
-	              				React.createElement(Link, {to: "select", params: {selectId: book.id}}, book.name), 
-	              				React.createElement("span", {className: spanClass})
-	              			)
-              			);
-	                })
-	            ), 
-	            React.createElement("div", {className: "content"}, 
-	                React.createElement(RouteHandler, null)
-	            )
-	        )
+            React.createElement("div", null, 
+                React.createElement("h1", null, "Books List"), 
+                React.createElement("ul", {className: "list-group"}, 
+                    this.state.booksList.map(function(book,i){
+                        var spanClass=cx({
+                              'glyphicon glyphicon-shopping-cart': book.select
+                            });
+                        return  (
+                            React.createElement("li", {className: "list-group-item", key: i}, 
+                                React.createElement(Link, {to: "select", params: {selectId: book.id}}, book.name), 
+                                React.createElement("span", {className: spanClass})
+                            )
+                        );
+                    })
+                ), 
+                React.createElement("div", {className: "content"}, 
+                    React.createElement(RouteHandler, null)
+                )
+            )
           /*jshint ignore:end */
         );
     }
 });
 
 module.exports = BooksList;
-},{"fluxxor":1,"react":"nakDgH","react-router":76}],280:[function(require,module,exports){
+},{"fluxxor":1,"react":"nakDgH","react-router":76}],281:[function(require,module,exports){
 /** @jsx React.DOM */
 
 'use strict';
@@ -29009,27 +29044,27 @@ Index = React.createClass({displayName: "Index",
     }
 });
 module.exports = Index;
-},{"fluxxor":1,"react":"nakDgH"}],281:[function(require,module,exports){
+},{"fluxxor":1,"react":"nakDgH"}],282:[function(require,module,exports){
 /** @jsx React.DOM */
 
 'use strict';
 
 var React = require('react'),
-	NotFound;
+    NotFound;
 
 NotFound = React.createClass({displayName: "NotFound",
       render: function () {
         return (
-          /*jshint ignore:start */
-          React.createElement("div", null, 
-            React.createElement("h1", null, "Not Found")
-          )
-          /*jshint ignore:end */
+            /*jshint ignore:start */
+            React.createElement("div", null, 
+                React.createElement("h1", null, "Not Found")
+            )
+            /*jshint ignore:end */
         );
       }
 });
 module.exports = NotFound;
-},{"react":"nakDgH"}],282:[function(require,module,exports){
+},{"react":"nakDgH"}],283:[function(require,module,exports){
 /*
  * API Services
  */
@@ -29069,7 +29104,7 @@ APIServices = (function() {
 
 module.exports = APIServices;
 
-},{}],283:[function(require,module,exports){
+},{}],284:[function(require,module,exports){
 'use strict';
 
 var Fluxxor = require('fluxxor'), 
@@ -29120,7 +29155,7 @@ BookStore = Fluxxor.createStore({
 });
 
 module.exports=BookStore;
-},{"../constants":276,"fluxxor":1}],284:[function(require,module,exports){
+},{"../constants":277,"fluxxor":1}],285:[function(require,module,exports){
 'use strict';
 
 var Fluxxor = require('fluxxor'), 
@@ -29139,10 +29174,10 @@ NewsStore = Fluxxor.createStore({
     },
     getNewsList: function(){
         return {
-          newsList: this.newsList
+            newsList: this.newsList
         };
     }
 });
 
 module.exports=NewsStore;
-},{"../constants":276,"fluxxor":1}]},{},[277])
+},{"../constants":277,"fluxxor":1}]},{},[278])

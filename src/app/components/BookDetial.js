@@ -3,8 +3,8 @@
 'use strict';
 
 var React = require('react'),
-	cx=React.addons.classSet,
-	//router
+    cx=React.addons.classSet,
+    //router
     Router = require('react-router'),
     Route = Router.Route,
     RouteHandler = Router.RouteHandler,
@@ -16,7 +16,7 @@ var React = require('react'),
     Constants = require('../constants'),
     Actions = require('../actions'),
     BookStore = require('../stores/BookStore'),
-	BooksDetial;
+    BooksDetial;
 
 BooksDetial = React.createClass({
     /*jshint ignore:start */
@@ -43,11 +43,11 @@ BooksDetial = React.createClass({
                 return book.id === selectId;
             }),
             addClass=cx({
-                'hide': book[0].select,
+                'hide': book[0].select||true,
                 'btn btn-default':true
             }),
             removeClass=cx({
-                'hide': !book[0].select,
+                'hide': !book[0].select||true,
                 'btn btn-default':true
             });
         return(
