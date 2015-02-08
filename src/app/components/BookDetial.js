@@ -2,52 +2,48 @@
 
 'use strict';
 
-var React = require('react'),
-    cx=React.addons.classSet,
+var React           = require('react'),
+    CX              = React.addons.classSet,
     //router
-    Router = require('react-router'),
-    Route = Router.Route,
-    RouteHandler = Router.RouteHandler,
-    Link = Router.Link,
+    Router          = require('react-router'),
+    Route           = Router.Route,
      //fluxxor
-    Fluxxor = require('fluxxor'),
-    FluxMixin = Fluxxor.FluxMixin(React),
+    Fluxxor         = require('fluxxor'),
+    FluxMixin       = Fluxxor.FluxMixin(React),
     StoreWatchMixin = Fluxxor.StoreWatchMixin,
-    Constants = require('../constants'),
-    Actions = require('../actions'),
-    BookStore = require('../stores/BookStore'),
+    Constants       = require('../constants'),
+    Actions         = require('../actions'),
+    BookStore       = require('../stores/BookStore'),
     BooksDetial;
 
 BooksDetial = React.createClass({
-    /*jshint ignore:start */
     mixins: [Router.Navigation,Router.State,FluxMixin, StoreWatchMixin('BookStore')],
-    /*jshint ignore:end */
     getStateFromFlux: function() {
         var flux = this.getFlux();
         return flux.store('BookStore').getBooksList();
     },
-    componentWillMount: function(){
-        if(this.state.booksList.length===0){
+    componentWillMount: function() {
+        if(this.state.booksList.length === 0){
             this.transitionTo('/');
         }
     },
-    _addSelectBook: function(book){
+    _addSelectBook: function(book) {
         this.getFlux().actions.addCart(book);
     },
-    _removeSelectBook: function(book){
+    _removeSelectBook: function(book) {
         this.getFlux().actions.deleteCart(book);
     },
-    render:function(){
+    render:function() {
         var selectId = this.getParams().selectId,
-            book=this.state.booksList.filter(function(book) {
+            book     = this.state.booksList.filter(function(book) {
                 return book.id === selectId;
             }),
-            addClass=cx({
-                'hide': book[0].select||false,
+            addClass    = CX({
+                'hide': book[0].select || false,
                 'btn btn-default':true
             }),
-            removeClass=cx({
-                'hide': !book[0].select||false,
+            removeClass = CX({
+                'hide': !book[0].select || false,
                 'btn btn-default':true
             });
         return(

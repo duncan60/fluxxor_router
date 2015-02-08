@@ -8,3 +8,4 @@ ehthumbs.db
 
 node_modules/
 /dist
+/src/bower_components/

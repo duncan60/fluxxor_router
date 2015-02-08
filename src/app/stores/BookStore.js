@@ -1,12 +1,12 @@
 'use strict';
 
-var Fluxxor = require('fluxxor'), 
+var Fluxxor   = require('fluxxor'), 
     Constants = require('../constants'),
     BookStore;
 BookStore = Fluxxor.createStore({
     initialize : function(){
         this.booksList = [];
-        this.cartsList=[];
+        this.cartsList = [];
         this.bindActions(
             Constants.LOAD_BOOK_LIST_SUCCESS,this.onLoadBookListSucess,
             Constants.LOAD_FAIL,this.onloadFail,
@@ -16,23 +16,23 @@ BookStore = Fluxxor.createStore({
         );
     },
     onLoadBookListSucess:function(res){
-        this.booksList=res.data.bookList;
+        this.booksList = res.data.bookList;
         this.emit('change');
     },
     onloadFail:function(res){
         this.emit('change');
     },
     onAddCart:function(playload){
-        var idx=this.booksList.indexOf(playload.book);
+        var idx = this.booksList.indexOf(playload.book);
         this.cartsList.push(playload.book);
-        this.booksList[idx].select=true;
+        this.booksList[idx].select = true;
         this.emit('change');
     },
     onDeleteCart:function(playload){
-        var idx=this.cartsList.indexOf(playload.book);
+        var idx = this.cartsList.indexOf(playload.book);
         this.cartsList.splice(idx,1);
-        idx=this.booksList.indexOf(playload.book);
-        this.booksList[idx].select=false;
+        idx = this.booksList.indexOf(playload.book);
+        this.booksList[idx].select = false;
         this.emit('change');
     },
     getBooksList: function() {

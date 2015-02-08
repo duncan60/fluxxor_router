@@ -11,7 +11,7 @@ NewsStore = Fluxxor.createStore({
         );
     },
     onLoadNewsListSucess:function(res){
-        this.newsList=res.data.newsList;
+        this.newsList = res.data.newsList;
         this.emit('change');
     },
     getNewsList: function(){

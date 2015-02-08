@@ -28635,26 +28635,24 @@ module.exports=actions;
 
 'use strict';
 
-var React = require('react'),
-    cx = React.addons.classSet,
+var React           = require('react'),
+    CX              = React.addons.classSet,
      //fluxxor
-    Fluxxor = require('fluxxor'),
-    FluxMixin = Fluxxor.FluxMixin(React),
+    Fluxxor         = require('fluxxor'),
+    FluxMixin       = Fluxxor.FluxMixin(React),
     StoreWatchMixin = Fluxxor.StoreWatchMixin,
-    BookStore = require('../stores/BookStore'),
+    BookStore       = require('../stores/BookStore'),
     Badge;
 
 Badge = React.createClass({displayName: "Badge",
-    /*jshint ignore:start */
     mixins: [FluxMixin, StoreWatchMixin('BookStore')],
-    /*jshint ignore:end */
     getStateFromFlux: function() {
         var flux = this.getFlux();
         return flux.store('BookStore').getBooksCart();
     },
-    render: function(){
-        var hiedClass=cx({
-              'hide': this.state.cartsList.length>0?false:true,
+    render: function() {
+        var hiedClass = CX({
+              'hide': this.state.cartsList.length > 0 ? false : true,
               'badge': true
             });
         return(
@@ -28671,52 +28669,48 @@ module.exports = Badge;
 
 'use strict';
 
-var React = require('react'),
-    cx=React.addons.classSet,
+var React           = require('react'),
+    CX              = React.addons.classSet,
     //router
-    Router = require('react-router'),
-    Route = Router.Route,
-    RouteHandler = Router.RouteHandler,
-    Link = Router.Link,
+    Router          = require('react-router'),
+    Route           = Router.Route,
      //fluxxor
-    Fluxxor = require('fluxxor'),
-    FluxMixin = Fluxxor.FluxMixin(React),
+    Fluxxor         = require('fluxxor'),
+    FluxMixin       = Fluxxor.FluxMixin(React),
     StoreWatchMixin = Fluxxor.StoreWatchMixin,
-    Constants = require('../constants'),
-    Actions = require('../actions'),
-    BookStore = require('../stores/BookStore'),
+    Constants       = require('../constants'),
+    Actions         = require('../actions'),
+    BookStore       = require('../stores/BookStore'),
     BooksDetial;
 
 BooksDetial = React.createClass({displayName: "BooksDetial",
-    /*jshint ignore:start */
     mixins: [Router.Navigation,Router.State,FluxMixin, StoreWatchMixin('BookStore')],
-    /*jshint ignore:end */
     getStateFromFlux: function() {
         var flux = this.getFlux();
         return flux.store('BookStore').getBooksList();
     },
-    componentWillMount: function(){
-        if(this.state.booksList.length===0){
+    componentWillMount: function() {
+        if(this.state.booksList.length === 0){
             this.transitionTo('/');
         }
     },
-    _addSelectBook: function(book){
+    _addSelectBook: function(book) {
         this.getFlux().actions.addCart(book);
     },
-    _removeSelectBook: function(book){
+    _removeSelectBook: function(book) {
         this.getFlux().actions.deleteCart(book);
     },
-    render:function(){
+    render:function() {
         var selectId = this.getParams().selectId,
-            book=this.state.booksList.filter(function(book) {
+            book     = this.state.booksList.filter(function(book) {
                 return book.id === selectId;
             }),
-            addClass=cx({
-                'hide': book[0].select||false,
+            addClass    = CX({
+                'hide': book[0].select || false,
                 'btn btn-default':true
             }),
-            removeClass=cx({
-                'hide': !book[0].select||false,
+            removeClass = CX({
+                'hide': !book[0].select || false,
                 'btn btn-default':true
             });
         return(
@@ -28743,8 +28737,8 @@ var React = require('react'),
 
 DeleteCartItem = React.createClass({displayName: "DeleteCartItem",
     propTypes: {
-        deleteCarts: React.PropTypes.func,
-        book: React.PropTypes.object.isRequired
+        deleteCarts : React.PropTypes.func,
+        book        : React.PropTypes.object.isRequired
     },
     getDefaultProps: function() {
         return {
@@ -28759,7 +28753,8 @@ DeleteCartItem = React.createClass({displayName: "DeleteCartItem",
         return (
           /*jshint ignore:start */
           React.createElement("li", {className: "list-group-item"}, 
-                "書名：", this.props.book.name, " 作者:", this.props.book.author, " ", React.createElement("a", {className: "btn btn-default", onClick: this.deleteBook}, " delete ")
+                "書名：", this.props.book.name, " 作者:", this.props.book.author, 
+                React.createElement("a", {className: "btn btn-default", onClick: this.deleteBook}, " Delete ")
           )
           /*jshint ignore:end */
         );
@@ -28882,19 +28877,13 @@ Router.run(routes, function (Handler,state) {
 
 'use strict';
 
-var React = require('react'),
-    cx=React.addons.classSet,
-    //router
-    Router = require('react-router'),
-    Route = Router.Route,
-    RouteHandler = Router.RouteHandler,
-    Link = Router.Link,
+var React           = require('react'),
     //fluxxor
-    Fluxxor = require('fluxxor'),
-    FluxMixin = Fluxxor.FluxMixin(React),
+    Fluxxor         = require('fluxxor'),
+    FluxMixin       = Fluxxor.FluxMixin(React),
     StoreWatchMixin = Fluxxor.StoreWatchMixin,
-    
-    DeleteCartItem = require('../components/DeleteCartItem'),
+
+    DeleteCartItem  = require('../components/DeleteCartItem'),
     BooksCart;
 
 BooksCart = React.createClass({displayName: "BooksCart",
@@ -28927,46 +28916,44 @@ BooksCart = React.createClass({displayName: "BooksCart",
 });
 
 module.exports = BooksCart;
-},{"../components/DeleteCartItem":276,"fluxxor":1,"react":"nakDgH","react-router":76}],280:[function(require,module,exports){
+},{"../components/DeleteCartItem":276,"fluxxor":1,"react":"nakDgH"}],280:[function(require,module,exports){
 /** @jsx React.DOM */
 
 'use strict';
 
-var React = require('react'),
-    cx=React.addons.classSet,
+var React           = require('react'),
+    CX              = React.addons.classSet,
     //router
-    Router = require('react-router'),
-    Route = Router.Route,
-    RouteHandler = Router.RouteHandler,
-    Link = Router.Link,
+    Router          = require('react-router'),
+    Route           = Router.Route,
+    RouteHandler    = Router.RouteHandler,
+    Link            = Router.Link,
      //fluxxor
-    Fluxxor = require('fluxxor'),
-    FluxMixin = Fluxxor.FluxMixin(React),
+    Fluxxor         = require('fluxxor'),
+    FluxMixin       = Fluxxor.FluxMixin(React),
     StoreWatchMixin = Fluxxor.StoreWatchMixin,
 
     BooksList;
 
 BooksList = React.createClass({displayName: "BooksList",
-    /*jshint ignore:start */
     mixins: [Router.Navigation,Router.State,FluxMixin, StoreWatchMixin('BookStore')],
-    /*jshint ignore:end */
     getStateFromFlux: function() {
         var flux = this.getFlux();
         return flux.store('BookStore').getBooksList ();
     },
-    componentWillMount: function(){
+    componentWillMount: function() {
         if(!this.getParams().selectId){
             this.transitionTo('/BooksList/1');
         }
     },
-    render: function () {
+    render: function() {
         return (
             /*jshint ignore:start */
             React.createElement("div", null, 
                 React.createElement("h1", null, "Books List"), 
                 React.createElement("ul", {className: "list-group"}, 
                     this.state.booksList.map(function(book,i){
-                        var spanClass=cx({
+                        var spanClass=CX({
                               'glyphicon glyphicon-shopping-cart': book.select
                             });
                         return  (
@@ -28992,26 +28979,21 @@ module.exports = BooksList;
 
 'use strict';
 
-var React = require('react'),
+var React           = require('react'),
     //fluxxor
-    Fluxxor = require('fluxxor'),
-    FluxMixin = Fluxxor.FluxMixin(React),
+    Fluxxor         = require('fluxxor'),
+    FluxMixin       = Fluxxor.FluxMixin(React),
     StoreWatchMixin = Fluxxor.StoreWatchMixin,
     Index;
 
 Index = React.createClass({displayName: "Index",
-    /*jshint ignore:start */
     mixins: [FluxMixin, StoreWatchMixin('BookStore','NewsStore')],
-    /*jshint ignore:end */
     getStateFromFlux: function() {
       var flux = this.getFlux();
       return {
-        book:flux.store('BookStore').getBooksList(),
-        news:flux.store('NewsStore').getNewsList()
+        book : flux.store('BookStore').getBooksList(),
+        news : flux.store('NewsStore').getNewsList()
       };
-    },
-    componentWillMount: function(){
-        console.log(this.state);
     },
     render: function () {
       return (
@@ -29107,13 +29089,13 @@ module.exports = APIServices;
 },{}],284:[function(require,module,exports){
 'use strict';
 
-var Fluxxor = require('fluxxor'), 
+var Fluxxor   = require('fluxxor'), 
     Constants = require('../constants'),
     BookStore;
 BookStore = Fluxxor.createStore({
     initialize : function(){
         this.booksList = [];
-        this.cartsList=[];
+        this.cartsList = [];
         this.bindActions(
             Constants.LOAD_BOOK_LIST_SUCCESS,this.onLoadBookListSucess,
             Constants.LOAD_FAIL,this.onloadFail,
@@ -29123,23 +29105,23 @@ BookStore = Fluxxor.createStore({
         );
     },
     onLoadBookListSucess:function(res){
-        this.booksList=res.data.bookList;
+        this.booksList = res.data.bookList;
         this.emit('change');
     },
     onloadFail:function(res){
         this.emit('change');
     },
     onAddCart:function(playload){
-        var idx=this.booksList.indexOf(playload.book);
+        var idx = this.booksList.indexOf(playload.book);
         this.cartsList.push(playload.book);
-        this.booksList[idx].select=true;
+        this.booksList[idx].select = true;
         this.emit('change');
     },
     onDeleteCart:function(playload){
-        var idx=this.cartsList.indexOf(playload.book);
+        var idx = this.cartsList.indexOf(playload.book);
         this.cartsList.splice(idx,1);
-        idx=this.booksList.indexOf(playload.book);
-        this.booksList[idx].select=false;
+        idx = this.booksList.indexOf(playload.book);
+        this.booksList[idx].select = false;
         this.emit('change');
     },
     getBooksList: function() {
@@ -29169,7 +29151,7 @@ NewsStore = Fluxxor.createStore({
         );
     },
     onLoadNewsListSucess:function(res){
-        this.newsList=res.data.newsList;
+        this.newsList = res.data.newsList;
         this.emit('change');
     },
     getNewsList: function(){

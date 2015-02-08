@@ -2,19 +2,13 @@
 
 'use strict';
 
-var React = require('react'),
-    cx=React.addons.classSet,
-    //router
-    Router = require('react-router'),
-    Route = Router.Route,
-    RouteHandler = Router.RouteHandler,
-    Link = Router.Link,
+var React           = require('react'),
     //fluxxor
-    Fluxxor = require('fluxxor'),
-    FluxMixin = Fluxxor.FluxMixin(React),
+    Fluxxor         = require('fluxxor'),
+    FluxMixin       = Fluxxor.FluxMixin(React),
     StoreWatchMixin = Fluxxor.StoreWatchMixin,
-    
-    DeleteCartItem = require('../components/DeleteCartItem'),
+
+    DeleteCartItem  = require('../components/DeleteCartItem'),
     BooksCart;
 
 BooksCart = React.createClass({

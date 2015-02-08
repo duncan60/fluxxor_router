@@ -2,26 +2,21 @@
 
 'use strict';
 
-var React = require('react'),
+var React           = require('react'),
     //fluxxor
-    Fluxxor = require('fluxxor'),
-    FluxMixin = Fluxxor.FluxMixin(React),
+    Fluxxor         = require('fluxxor'),
+    FluxMixin       = Fluxxor.FluxMixin(React),
     StoreWatchMixin = Fluxxor.StoreWatchMixin,
     Index;
 
 Index = React.createClass({
-    /*jshint ignore:start */
     mixins: [FluxMixin, StoreWatchMixin('BookStore','NewsStore')],
-    /*jshint ignore:end */
     getStateFromFlux: function() {
       var flux = this.getFlux();
       return {
-        book:flux.store('BookStore').getBooksList(),
-        news:flux.store('NewsStore').getNewsList()
+        book : flux.store('BookStore').getBooksList(),
+        news : flux.store('NewsStore').getNewsList()
       };
-    },
-    componentWillMount: function(){
-        console.log(this.state);
     },
     render: function () {
       return (
